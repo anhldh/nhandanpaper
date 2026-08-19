@@ -1,0 +1,111 @@
+/* Design-system tokens from the Claude Design project
+   `_ds/classical-5179ada4-e36a-46e2-a31e-831a3df8baef/styles.css`.
+   Only the tokens and base rules this page consumes are carried over; the
+   system's component classes (.btn, .card, .table, …) are unused here. */
+
+:root {
+  color-scheme: light;
+
+  --color-text: #201f1d;
+  --color-accent: #b68235;
+
+  --color-accent-100: #fff3e4;
+  --color-accent-600: #a06f24;
+  --color-accent-700: #7d5411;
+
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-body: "Lora", system-ui, sans-serif;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+
+  /* page ground — overwritten at runtime from the `paperTone` prop */
+  --paper: #fbeee2;
+}
+
+/* --- page shell (from the source document's <helmet> <style>) --- */
+
+/* No `scroll-behavior: smooth` here — ScrollSmoother drives the scroll and
+   GSAP documents the CSS property as conflicting with it. Jumps to a chapter
+   are eased in JS instead (see `useGoToChapter`). */
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* `overflow-x: hidden` (set globally in index.css) turns html/body into scroll
+   containers, which breaks ScrollTrigger's measurements; `clip` does not. */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* `#smooth-wrapper` / `#smooth-content` need no CSS of their own: ScrollSmoother
+   3.15 keeps the document scrolling natively and styles both elements inline,
+   so before it mounts they are plain blocks — which is the right fallback. */
+
+.journey :focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.journey ::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+.journey figure {
+  margin: 0;
+}
+
+@keyframes drift {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.09) translate3d(0, -1.2%, 0);
+  }
+}
+@keyframes cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+@keyframes halo {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* --- interaction states (the source expressed these as style-hover /
+       style-active attributes, which have no inline-style equivalent) --- */
+
+.j-outline-btn:hover {
+  background: color-mix(in srgb, var(--color-accent-700) 14%, transparent);
+}
+.j-outline-btn:active {
+  background: color-mix(in srgb, var(--color-accent-600) 26%, transparent);
+}
+
+.j-toc-row:hover {
+  background: color-mix(in srgb, var(--color-accent-700) 9%, transparent);
+}
