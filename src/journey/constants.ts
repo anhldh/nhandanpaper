@@ -9,6 +9,19 @@ export const PLATE_MASK: CSSProperties = {
   maskComposite: "intersect",
 };
 
+/**
+ * Như PLATE_MASK nhưng mép trên tan dần sâu hơn một chút (9% thay vì 3.5%),
+ * để chỗ giáp ranh giữa con số năm và ảnh chapter mềm hơn.
+ */
+export const PLATE_MASK_SOFT_TOP: CSSProperties = {
+  WebkitMaskImage:
+    "linear-gradient(to bottom, transparent 0, #000 9%, #000 96.5%, transparent 100%), linear-gradient(to right, transparent 0, #000 3.5%, #000 96.5%, transparent 100%)",
+  maskImage:
+    "linear-gradient(to bottom, transparent 0, #000 9%, #000 96.5%, transparent 100%), linear-gradient(to right, transparent 0, #000 3.5%, #000 96.5%, transparent 100%)",
+  WebkitMaskComposite: "source-in",
+  maskComposite: "intersect",
+};
+
 export const OUTLINE_BUTTON: CSSProperties = {
   font: "inherit",
   letterSpacing: ".12em",

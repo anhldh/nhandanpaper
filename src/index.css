@@ -17,13 +17,13 @@ body {
 }
 
 /* Bật theo từng trang (xem LayoutPaper) — ẩn hẳn thanh cuộn, không thu mỏng. */
-html.hide-scrollbar {
+/* html.hide-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 html.hide-scrollbar::-webkit-scrollbar {
   display: none;
-}
+} */
 
 body {
   color: var(--foreground);
@@ -48,4 +48,25 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+/* --- thanh cuộn mảnh --- */
+
+/* Chromium, Safari, Edge */
+html::-webkit-scrollbar {
+  width: 1px;
+}
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-accent-700) 45%, transparent);
+  border-radius: 0;
+}
+
+/* Firefox: không đặt được px, `thin` là mức mảnh nhất (~8–11px) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-accent-700) 45%, transparent)
+    transparent;
 }

@@ -108,7 +108,10 @@ export default function JourneyPaper({
           gap: "clamp(10px, 2vw, 22px)",
           padding: "0 clamp(12px, 2.4vw, 26px)",
           height: 58,
-          background: "color-mix(in srgb, var(--paper) 92%, transparent)",
+          /* Một vệt vàng ấm quét chéo nhạt dần, đè lên nền giấy mờ — đủ để
+             header tách khỏi phần thân trang mà không thành một thanh màu. */
+          background:
+            "linear-gradient(104deg, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, color-mix(in srgb, var(--color-accent) 5%, transparent) 46%, transparent 82%), color-mix(in srgb, var(--paper) 92%, transparent)",
           backdropFilter: "blur(9px)",
           borderBottom:
             "1px solid color-mix(in srgb, var(--color-accent-700) 22%, transparent)",
@@ -295,6 +298,10 @@ export default function JourneyPaper({
             style={{
               position: "relative",
               minHeight: "100svh",
+              /* Vệt màu chỉ ở đỉnh trang rồi tan hết trước khi hero kết thúc,
+                 nên các chapter phía dưới vẫn là nền giấy trơn. */
+              background:
+                "linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 13%, transparent) 0, transparent clamp(260px, 46vh, 520px))",
               display: "grid",
               gridTemplateColumns:
                 "repeat(auto-fit, minmax(min(100%, 400px), 1fr))",
@@ -310,8 +317,10 @@ export default function JourneyPaper({
               <div
                 style={{
                   overflow: "hidden",
-                  maxWidth: 520,
+                  maxWidth: 620,
                   marginInline: "auto",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 <img
@@ -319,9 +328,12 @@ export default function JourneyPaper({
                   alt="Chủ tịch Hồ Chí Minh"
                   style={{
                     display: "block",
-                    width: "100%",
+                    /* Chiều rộng chạy theo chiều cao nên khung ôm sát tranh,
+                       không sinh lề thừa — tranh hiện đủ mà vẫn nằm giữa. */
+                    width: "auto",
+                    maxWidth: "100%",
                     height: "min(72vh, calc(40vw + 220px))",
-                    objectFit: "cover",
+                    objectFit: "contain",
                     mixBlendMode: "multiply",
                     animation: motion
                       ? "drift 26s ease-in-out infinite alternate"
@@ -466,109 +478,105 @@ export default function JourneyPaper({
             />
           ))}
 
-          <section
-            data-chapter
-            data-screen-label="Ba Đình"
-            style={{
-              position: "relative",
-              borderTop:
-                "1px solid color-mix(in srgb, var(--color-accent-700) 18%, transparent)",
-            }}
-          >
-            <div style={{ position: "relative" }}>
-              <img
-                src={src("assets/closing-crowd.png")}
-                alt="Ba Đình, 2/9/1945"
-                data-parallax
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: 1040,
-                  margin: "0 auto",
-                  height: "auto",
-                  maxHeight: "54vh",
-                  objectFit: "cover",
-                  objectPosition: "center top",
-                  mixBlendMode: "multiply",
-                  ...PLATE_MASK,
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "auto 0 -1px 0",
-                  height: "46%",
-                  background:
-                    "linear-gradient(to bottom, transparent, var(--paper) 86%)",
-                  pointerEvents: "none",
-                }}
-              />
-              <div
-                style={{
-                  padding:
-                    "clamp(6px, 1.5vh, 18px) clamp(20px, 6vw, 110px) clamp(40px, 7vh, 92px)",
-                  textAlign: "center",
-                }}
+          {/* Tranh Ba Đình chỉ làm nền cho riêng lời của Chủ tịch. */}
+          <div style={{ position: "relative" }}>
+            {/* Tranh chỉ chiếm dải dưới cùng, tràn hết bề ngang. Chữ nằm phía
+                trên nó, trên nền giấy sạch — đúng quan hệ như bản cũ.
+                Mask ở lớp riêng để chỉ ăn vào ảnh, không ăn vào chữ. */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "clamp(260px, 42vw, 900px)",
+                zIndex: 0,
+                pointerEvents: "none",
+                backgroundColor: "var(--paper)",
+                backgroundImage: `url(${src("assets/footer.jpg")})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center bottom",
+                backgroundRepeat: "no-repeat",
+                backgroundBlendMode: "multiply",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, transparent 0, #000 42%, #000 92%, transparent 100%)",
+                maskImage:
+                  "linear-gradient(to bottom, transparent 0, #000 42%, #000 92%, transparent 100%)",
+              }}
+            />
+            <section
+              data-chapter
+              data-screen-label="Ba Đình"
+              style={{
+                position: "relative",
+                zIndex: 1,
+                /* Đáy chừa đúng bằng dải ảnh phía dưới để chữ không đè lên. */
+                padding:
+                  "clamp(54px, 10vh, 130px) clamp(20px, 6vw, 110px) clamp(290px, 46vw, 680px)",
+                textAlign: "center",
+              }}
+            >
+              <Reveal
+                motion={motion}
+                duration={0.8}
+                style={{ maxWidth: "54ch", margin: "0 auto" }}
               >
-                <Reveal
-                  motion={motion}
-                  duration={0.8}
-                  style={{ maxWidth: "54ch", margin: "0 auto" }}
+                <span
+                  style={{
+                    fontSize: 12,
+                    letterSpacing: ".24em",
+                    textTransform: "uppercase",
+                    color: "var(--color-accent-700)",
+                    fontFeatureSettings: "'tnum'",
+                  }}
                 >
-                  <span
-                    style={{
-                      fontSize: 12,
-                      letterSpacing: ".24em",
-                      textTransform: "uppercase",
-                      color: "var(--color-accent-700)",
-                      fontFeatureSettings: "'tnum'",
-                    }}
-                  >
-                    {t(closing.date, lang)}
-                  </span>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-heading)",
-                      fontStyle: "italic",
-                      fontWeight: 300,
-                      fontSize: "clamp(24px, 3.6vw, 50px)",
-                      lineHeight: 1.28,
-                      margin: "16px 0 14px",
-                      color: "var(--color-text)",
-                      textWrap: "pretty",
-                    }}
-                  >
-                    {t(closing.quote, lang)}
-                  </p>
-                  <span
-                    style={{
-                      fontSize: "11.5px",
-                      letterSpacing: ".18em",
-                      textTransform: "uppercase",
-                      color:
-                        "color-mix(in srgb, var(--color-text) 60%, transparent)",
-                    }}
-                  >
-                    {t(closing.attr, lang)}
-                  </span>
-                </Reveal>
-              </div>
-            </div>
-          </section>
+                  {t(closing.date, lang)}
+                </span>
+                <p
+                  style={{
+                    fontFamily: "var(--font-heading)",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "clamp(24px, 3.6vw, 50px)",
+                    lineHeight: 1.28,
+                    margin: "16px 0 14px",
+                    color: "var(--color-text)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  {t(closing.quote, lang)}
+                </p>
+                <span
+                  style={{
+                    fontSize: "11.5px",
+                    letterSpacing: ".18em",
+                    textTransform: "uppercase",
+                    color:
+                      "color-mix(in srgb, var(--color-text) 60%, transparent)",
+                  }}
+                >
+                  {t(closing.attr, lang)}
+                </span>
+              </Reveal>
+            </section>
+          </div>
 
           <footer
             style={{
               padding:
                 "clamp(34px, 6vh, 74px) clamp(20px, 5vw, 90px) clamp(50px, 8vh, 96px)",
+              borderTop:
+                "1px solid color-mix(in srgb, var(--color-accent-700) 18%, transparent)",
               display: "grid",
               gridTemplateColumns:
                 "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
               gap: "clamp(22px, 3vw, 54px)",
               alignItems: "start",
-              borderTop:
-                "1px solid color-mix(in srgb, var(--color-accent-700) 18%, transparent)",
               maxWidth: 1680,
               margin: "0 auto",
+              background:
+                "linear-gradient(180deg, transparent 0, color-mix(in srgb, var(--color-accent) 0%, transparent) 100%)",
             }}
           >
             <div>

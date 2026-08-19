@@ -109,3 +109,21 @@ body {
 .j-toc-row:hover {
   background: color-mix(in srgb, var(--color-accent-700) 9%, transparent);
 }
+
+/* --- chapter media --- */
+
+/* Khối ảnh thả trôi bên trái để chữ ôm quanh, rồi tự tràn hết bề ngang khi
+   đã qua khỏi đáy ảnh. Float là cách duy nhất làm được bằng CSS thuần. */
+.j-media {
+  float: left;
+  width: clamp(320px, 46%, 760px);
+  margin: 0 clamp(22px, 3.4vw, 62px) clamp(18px, 2.5vw, 40px) 0;
+}
+
+@media (max-width: 860px) {
+  .j-media {
+    float: none;
+    width: 100%;
+    margin: 0 0 clamp(20px, 4vw, 34px);
+  }
+}

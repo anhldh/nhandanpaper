@@ -2,12 +2,7 @@
 
 import styled from "@emotion/styled";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
-import React, {
-  type Dispatch,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { type Dispatch, useCallback, useMemo, useState } from "react";
 
 /* ============ types ============ */
 export type Marker = {
@@ -25,7 +20,7 @@ export type IconPos = {
 };
 
 const FOOTER_TARGET_ID = "img5";
-const FOOTER_SRC = "https://s3.yootek.com.vn/yootek/1756541117302-8786.png";
+// const FOOTER_SRC = "https://s3.yootek.com.vn/yootek/1756541117302-8786.png";
 const IFRAME_SRC =
   "https://vr360.yoolife.vn/quang-truong-ba-dinh-zbdsc2149u275784";
 const DESKTOP_RATIO = 16 / 9;

@@ -18,6 +18,18 @@ export type Pin = {
   url: string;
 };
 
+/** Tinh chỉnh một ảnh phụ. Bỏ trống field nào thì field đó dùng mặc định. */
+export type InsetBox = {
+  /** Bề rộng, giá trị CSS bất kỳ. Mặc định `min(42%, 190px)`. */
+  width?: string;
+  /** Độ nghiêng tính bằng độ. Mặc định: img3 = 1.6, img2 = -1.4. */
+  rotate?: number;
+  /** Dịch ngang theo px, dương là sang phải. */
+  dx?: number;
+  /** Dịch dọc theo px, dương là xuống dưới. */
+  dy?: number;
+};
+
 export type Chapter = {
   id: string;
   year: string;
@@ -29,8 +41,14 @@ export type Chapter = {
   sub: L;
   img: string;
   alt: L;
-  img2: string;
-  alt2: L;
+  img2?: string;
+  alt2?: L;
+  /** Kích cỡ / vị trí của ảnh phụ bên phải. */
+  img2Box?: InsetBox;
+  img3?: string;
+  alt3?: L;
+  /** Kích cỡ / vị trí của ảnh phụ bên trái. */
+  img3Box?: InsetBox;
   paras: Record<Lang, string[]>;
   quote?: L;
   quoteAttr?: L;
@@ -93,13 +111,16 @@ export const chapters: Chapter[] = [
     short: M("Pác Bó", "Pac Bo"),
     title: M("Trở về Tổ quốc", "Returning to the homeland"),
     sub: M("Pác Bó lịch sử", "Historic Pac Bo"),
-    img: "assets/pacbo-rocks.png",
+    img: "assets/pacbo-rocks.jpg",
     alt: M("Cột mốc 108 tại Pác Bó", "Border Marker No. 108 at Pac Bo"),
-    img2: "assets/soldiers-mist.png",
+    img2: "assets/soldiers-mist.jpg",
     alt2: M(
       "Các đồng chí trên đường về nước",
       "Comrades on the return journey",
     ),
+    // img3: "assets/hcm-desk-teal.png",
+    // alt3: M("Hồ Chí Minh tại Pác Bó", "Ho Chi Minh at Pac Bo"),
+    // img3Box: { width: "120px", rotate: 3, dx: 12, dy: -20 },
     paras: {
       vi: [
         "Sáng ngày 28/1/1941 (mùng hai Tết Tân Tỵ), lãnh tụ Nguyễn Ái Quốc cùng một số đồng chí vượt cột mốc 108 trên biên giới Việt Nam – Trung Quốc, tại làng Pác Pó, xã Trường Hà, tỉnh Cao Bằng. Sau gần 30 năm xa cách, người con của làng Sen, Nghệ An, lại đặt chân lên đất thiêng của Tổ quốc.",
@@ -159,13 +180,11 @@ export const chapters: Chapter[] = [
       "Hội nghị Trung ương 8 và sự ra đời của Việt Minh",
       "The 8th Plenum and the founding of the Viet Minh",
     ),
-    img: "assets/hcm-desk-teal.png",
+    img: "assets/vietminh-flag.png",
     alt: M(
       "Nguyễn Ái Quốc làm việc tại căn cứ",
       "Nguyen Ai Quoc at work in the base",
     ),
-    img2: "assets/vietminh-flag.png",
-    alt2: M("Cờ Việt Minh", "The Viet Minh banner"),
     paras: {
       vi: [
         "Tháng 5/1941, với tư cách đại diện Quốc tế Cộng sản, Nguyễn Ái Quốc triệu tập và chủ trì Hội nghị lần thứ tám Ban Chấp hành Trung ương Đảng, họp từ ngày 10 đến 19/5/1941. Sau khi phân tích kỹ tình hình, vị trí và lực lượng của cách mạng Việt Nam, Hội nghị xác định “phải thay đổi chiến lược”.",
@@ -237,8 +256,9 @@ export const chapters: Chapter[] = [
     ),
     img: "assets/prison-scene.png",
     alt: M("Người trong nhà tù Quảng Tây", "Ho Chi Minh in a Guangxi prison"),
-    img2: "assets/clipping.png",
-    alt2: M("Báo Việt Nam độc lập", "The newspaper Viet Nam Doc Lap"),
+    // img2: "assets/clipping.png",
+    // alt2: M("Báo Việt Nam độc lập", "The newspaper Viet Nam Doc Lap"),
+    // img2Box: { width: "240px", rotate: -1.4, dx: -12, dy: -100 },
     paras: {
       vi: [
         "Tháng 3/1942, Hồ Chí Minh chuyển đến Lam Sơn, cách trung tâm tỉnh Cao Bằng khoảng 15 ki-lô-mét. Nằm ở huyện Hòa An, Lam Sơn là một thung lũng được núi cao bao bọc, địa thế lợi hại và an toàn. Từ đây, Người chỉ đạo phong trào cách mạng cả nước; báo “Việt Nam độc lập” in tại Pác Bó và Khuổi Nậm tiếp tục ra đều, phổ biến nghị quyết Hội nghị Trung ương 8 và vận động nhân dân thực hiện.",
@@ -302,8 +322,9 @@ export const chapters: Chapter[] = [
       "Hồ Chí Minh trong những năm chuẩn bị",
       "Ho Chi Minh in the years of preparation",
     ),
-    img2: "assets/tantrao-clearing.png",
+    img2: "assets/vietnamgiaiphong.jpg",
     alt2: M("Rừng Tân Trào", "The Tan Trao forest"),
+    img2Box: { width: "240px", rotate: -1.4, dx: -12, dy: -100 },
     paras: {
       vi: [
         "Cuối tháng 3/1944, một hội nghị kín của đại biểu Việt Cách ở nước ngoài họp tại Liễu Châu, do tướng Trương Phát Khuê chủ trì. Hồ Chí Minh trình bày hai báo cáo: một về bộ phận Việt Nam trong Hội Quốc tế chống xâm lược, một về các đảng phái đang hoạt động trong nước. Ít lâu sau, Người trở thành ủy viên chính thức của Ban Chấp hành Trung ương Việt Cách.",
@@ -366,44 +387,60 @@ export const chapters: Chapter[] = [
   {
     id: "tantrao45",
     year: "1945",
-    label: "7/1945 Tân Trào",
-    dateLabel: M("16/7/1945", "July 16, 1945"),
+    label: "7–8/1945 Tân Trào",
+    dateLabel: M("16/7 – 17/8/1945", "July 16 – August 17, 1945"),
     station: M("Tân Trào, Tuyên Quang", "Tan Trao, Tuyen Quang"),
     short: M("Tân Trào", "Tan Trao"),
-    title: M("Một thời khắc lịch sử", "A historic moment"),
-    sub: M(
-      "Toán OSS nhảy xuống Kim Long và lời nhắn ở lán Nà Nưa",
-      "The OSS team parachutes into Kim Long, and the words at Na Nua hut",
+    title: M(
+      "Tân Trào — nơi quyết định vận nước",
+      "Tan Trao, where the nation’s fate was decided",
     ),
-    img: "assets/tantrao-parade.png",
+    sub: M(
+      "Toán OSS nhảy xuống Kim Long, lán Nà Nưa và Quốc dân Đại hội",
+      "The OSS drop at Kim Long, the Na Nua hut, and the Tan Trao Congress",
+    ),
+    img: "assets/moment-1945.png",
     alt: M(
       "Lễ ra mắt lực lượng tại Tân Trào",
       "A parade of the forces at Tan Trao",
     ),
-    img2: "assets/ungho-crowd.png",
+    img2: "assets/unghovietminh.jpg",
     alt2: M(
       "Nhân dân ủng hộ Việt Minh",
       "People rallying in support of the Viet Minh",
     ),
+    img2Box: { width: "240px", rotate: -1.4, dx: -12, dy: -100 },
+    img3: "assets/vietnamdoclap.jpg",
+    alt3: M(
+      "Báo Việt Nam độc lập, 7/1945",
+      "The newspaper Viet Nam Doc Lap, July 1945",
+    ),
+    img3Box: { width: "180px", rotate: 1.6, dx: 12, dy: -70 },
     paras: {
       vi: [
         "Qua Phạm Việt Tú, một Việt kiều thông thạo tiếng Anh, Hồ Chí Minh liên lạc được với tướng Claire Chennault, chỉ huy Không đoàn 14 của Mỹ. Ngày 29/3/1945, Chennault tiếp Người tại sở chỉ huy, cảm ơn Việt Minh đã cứu phi công Rudolph Shaw. Người nêu rõ Việt Minh đứng cùng phe Đồng minh chống Nhật và đề nghị giúp đỡ vũ khí, thuốc men.",
         "Ngày 16/7/1945, theo thỏa thuận giữa Người và quân đội Mỹ ở Côn Minh, một toán thuộc Cơ quan Tình báo chiến lược (OSS) nhảy xuống thôn Kim Long (nay là thôn Tân Lập), xã Tân Trào, huyện Sơn Dương — nay thuộc tỉnh Tuyên Quang — cách nơi ở của Hồ Chí Minh không xa. Ngoài việc chuyển tin tình báo về Côn Minh, toán này huấn luyện khoảng 100 du kích Việt Minh sử dụng vũ khí Mỹ, gồm badôca, cácbin và lựu đạn, để đánh Nhật.",
-        "Cuối tháng 7/1945, tại lán Nà Nưa, Tân Trào, Người lâm bệnh nặng, sốt cao liên tục, nhiều lúc mê đi. Một hôm, Võ Nguyên Giáp đến báo cáo tình hình, thấy Người sốt hầm hập, liền xin ở lại bên Người. Đêm ấy, sau khi tỉnh lại trong giây lát, Người nói với ông.",
+        "Cuối tháng 7/1945, tại lán Nà Nưa, Tân Trào, Người lâm bệnh nặng, sốt cao liên tục, nhiều lúc mê đi. Một hôm, Võ Nguyên Giáp đến báo cáo tình hình, thấy Người sốt hầm hập, liền xin ở lại bên Người. Đêm ấy, sau khi tỉnh lại trong giây lát, Người nói với ông: “Lúc này thời cơ thuận lợi đã tới, dù hy sinh tới đâu, dù phải đốt cháy cả dãy Trường Sơn cũng phải kiên quyết giành cho được độc lập.”",
+        "Sau khi Nhật tuyên bố đầu hàng Đồng minh vô điều kiện ngày 15/8/1945, Hồ Chí Minh đề nghị Hội nghị toàn quốc của Đảng kết thúc sớm để các đại biểu kịp trở về địa phương, phát động tổng khởi nghĩa giành chính quyền. Hội nghị thông qua nghị quyết gồm 11 vấn đề lớn và quyết định lập Ủy ban Khởi nghĩa toàn quốc cùng Bộ Tổng chỉ huy Quân giải phóng Việt Nam.",
+        "Song song với Hội nghị toàn quốc của Đảng, Người triệu tập Quốc dân Đại hội Tân Trào, họp tại tỉnh Tuyên Quang từ ngày 16 đến 17/8/1945. Hơn 60 đại biểu lần lượt về Tân Trào, đại diện Bắc – Trung – Nam, Việt kiều, các đảng phái, đoàn thể, dân tộc thiểu số và tôn giáo. Đại hội tán thành chủ trương tổng khởi nghĩa của Đảng, thông qua Mười chính sách của Việt Minh, quyết định lấy cờ đỏ sao vàng năm cánh làm Quốc kỳ, bài Tiến quân ca của Văn Cao làm Quốc ca, và bầu Ủy ban Dân tộc giải phóng — tức Chính phủ lâm thời — do Hồ Chí Minh làm Chủ tịch.",
+        "Chiều 17/8, ngày cuối của Đại hội, dù cơn sốt trở lại, Người vẫn gắng đến dự. Trước Đình Tân Trào, Người thay mặt Ủy ban Dân tộc giải phóng Việt Nam đọc lời tuyên thệ nhậm chức trước quốc dân.",
       ],
       en: [
         "Through Pham Viet Tu, an overseas Vietnamese fluent in English, Ho Chi Minh established contact with General Claire Chennault, commander of the US 14th Air Force. Chennault met him on March 29, 1945, and thanked Ho Chi Minh and the Viet Minh for rescuing the American pilot Rudolph Shaw. Ho Chi Minh articulated that the Viet Minh stood with the Allies in the fight against Japan, and requested assistance in the form of weapons and medical supplies.",
         "On July 16, 1945, under an agreement forged between President Ho Chi Minh and the US military stationed in Kunming, an Office of Strategic Services (OSS) team parachuted into Kim Long hamlet (now Tan Lap hamlet), Tan Trao Commune, Son Duong District — today Tuyen Quang Province — not far from Ho Chi Minh’s forest shelter. In addition to relaying intelligence to Kunming, the team trained around 100 Viet Minh guerrillas to use American weapons, including bazookas, carbines and hand grenades, in the fight against Japanese forces.",
-        "In late July 1945, Ho Chi Minh was stricken by severe illness at Na Nua hut in Tan Trao. Although he took quinine and cold medicine, his high fever persisted and he frequently drifted in and out of delirium. One day, when General Vo Nguyen Giap came to report on the situation and saw that Ho Chi Minh was burning with fever, he asked permission to remain by his side. That night, after briefly regaining consciousness, he told Vo Nguyen Giap:",
+        "In late July 1945, Ho Chi Minh was stricken by severe illness at Na Nua hut in Tan Trao. Although he took quinine and cold medicine, his high fever persisted and he frequently drifted in and out of delirium. One day, when General Vo Nguyen Giap came to report on the situation and saw that Ho Chi Minh was burning with fever, he asked permission to remain by his side. That night, after briefly regaining consciousness, he told Vo Nguyen Giap: “The opportune moment has now arrived. No matter the sacrifice, even if we must burn the entire Truong Son mountain range, we must secure independence.”",
+        "After receiving news that Japan had formally announced its unconditional surrender to the Allies on August 15, 1945, Ho Chi Minh urged the National Party Conference to conclude as quickly as possible so that delegates could immediately return to their localities and mobilise the people to launch the general uprising and seize power. The conference adopted a resolution covering 11 major issues, and decided to establish the National Uprising Committee and the High Command of the Viet Nam Liberation Army.",
+        "Running in parallel with the National Party Conference, Ho Chi Minh convened the Tan Trao Congress of People’s Representatives, held in Tuyen Quang Province from August 16 to 17, 1945. More than 60 delegates gradually gathered in Tan Trao, representing northern, central and southern Viet Nam, overseas Vietnamese communities, political parties, mass organisations, ethnic minority groups and religious communities. The congress endorsed the line adopted by the Party, approved the Viet Minh’s ten major policies, adopted the red flag with a five-pointed yellow star as the national flag, selected Tien Quan Ca (The Marching Song) by Van Cao as the national anthem, and elected the National Liberation Committee — the Provisional Government — with Ho Chi Minh serving as its president.",
+        "That afternoon, Ho Chi Minh’s fever returned, preventing him from attending the departure ceremony of the Liberation Army. On August 17, the closing day of the Congress of People’s Representatives, he nevertheless struggled to attend. Standing before Tan Trao Communal House, he delivered, on behalf of the Viet Nam National Liberation Committee, the oath of office introducing the committee to the nation.",
       ],
     },
     quote: M(
-      "“Lúc này thời cơ thuận lợi đã tới, dù hy sinh tới đâu, dù phải đốt cháy cả dãy Trường Sơn cũng phải kiên quyết giành cho được độc lập.”",
-      "“The opportune moment has now arrived. No matter the sacrifice, even if we must burn the entire Truong Son mountain range, we must secure independence.”",
+      "“Chúng ta được đại biểu của quốc dân bầu ra để làm việc trong Ủy ban Dân tộc giải phóng, lãnh đạo cuộc cách mạng của nhân dân. Trước lá cờ thiêng liêng của Tổ quốc, chúng ta nguyện kiên quyết lãnh đạo nhân dân tiến lên, ra sức chiến đấu chống quân thù, giành lại độc lập cho Tổ quốc. Dù phải hy sinh đến giọt máu cuối cùng, quyết không lùi bước. Xin thề!”",
+      "“We have been elected by the representatives of the people to serve on the National Liberation Committee and lead our people’s revolution. Before the sacred flag of the Fatherland, we solemnly pledge to lead our people forward with unwavering determination, to fight the enemy with all our strength, and to regain our nation’s independence. Even if we must sacrifice the last drop of our blood, we shall never retreat. This we solemnly swear.”",
     ),
     quoteAttr: M(
-      "Hồ Chí Minh nói với Võ Nguyên Giáp, lán Nà Nưa, 7/1945",
-      "Ho Chi Minh to Vo Nguyen Giap, Na Nua hut, July 1945",
+      "Lời tuyên thệ trước Đình Tân Trào, 17/8/1945",
+      "The oath before Tan Trao Communal House, August 17, 1945",
     ),
     stats: [
       {
@@ -422,55 +459,6 @@ export const chapters: Chapter[] = [
           "the US 14th Air Force at Kunming",
         ),
       },
-    ],
-    pins: [
-      {
-        x: "72%",
-        y: "30%",
-        label: M("Tân Trào", "Tan Trao"),
-        date: "16/7/1945",
-        title: M("Tân Trào, Tuyên Quang", "Tan Trao, Tuyen Quang"),
-        url: "https://maps.google.com/maps?q=21.8117,105.4467&z=13&output=embed",
-      },
-    ],
-  },
-  {
-    id: "quocdan",
-    year: "1945",
-    label: "8/1945 Quốc dân Đại hội",
-    dateLabel: M("14 – 17/8/1945", "August 14–17, 1945"),
-    station: M("Tân Trào, Tuyên Quang", "Tan Trao, Tuyen Quang"),
-    short: M("Quốc dân Đại hội", "National Congress"),
-    title: M("Quốc dân Đại hội Tân Trào", "The Tan Trao Congress"),
-    sub: M(
-      "Cờ đỏ sao vàng, Tiến quân ca và Chính phủ lâm thời",
-      "The red flag, the anthem and a provisional government",
-    ),
-    img: "assets/tantrao-clearing.png",
-    alt: M("Quốc dân Đại hội tại Tân Trào", "The congress at Tan Trao"),
-    img2: "assets/hcm-newspaper.png",
-    alt2: M("Người đọc báo tại căn cứ", "Ho Chi Minh reading at the base"),
-    paras: {
-      vi: [
-        "Sau khi Nhật tuyên bố đầu hàng Đồng minh vô điều kiện ngày 15/8/1945, Hồ Chí Minh đề nghị Hội nghị toàn quốc của Đảng kết thúc sớm để các đại biểu kịp trở về địa phương, phát động tổng khởi nghĩa giành chính quyền. Hội nghị thông qua nghị quyết gồm 11 vấn đề lớn và quyết định lập Ủy ban Khởi nghĩa toàn quốc cùng Bộ Tổng chỉ huy Quân giải phóng Việt Nam.",
-        "Song song với Hội nghị toàn quốc của Đảng, Người triệu tập Quốc dân Đại hội Tân Trào, họp tại tỉnh Tuyên Quang từ ngày 16 đến 17/8/1945. Hơn 60 đại biểu lần lượt về Tân Trào, đại diện Bắc – Trung – Nam, Việt kiều, các đảng phái, đoàn thể, dân tộc thiểu số và tôn giáo. Đại hội tán thành chủ trương tổng khởi nghĩa của Đảng, thông qua Mười chính sách của Việt Minh, quyết định lấy cờ đỏ sao vàng năm cánh làm Quốc kỳ, bài Tiến quân ca của Văn Cao làm Quốc ca, và bầu Ủy ban Dân tộc giải phóng — tức Chính phủ lâm thời — do Hồ Chí Minh làm Chủ tịch.",
-        "Chiều 17/8, ngày cuối của Đại hội, dù cơn sốt trở lại, Người vẫn gắng đến dự. Trước Đình Tân Trào, Người thay mặt Ủy ban Dân tộc giải phóng Việt Nam đọc lời tuyên thệ nhậm chức trước quốc dân.",
-      ],
-      en: [
-        "After receiving news that Japan had formally announced its unconditional surrender to the Allies on August 15, 1945, Ho Chi Minh urged the National Party Conference to conclude as quickly as possible so that delegates could immediately return to their localities and mobilise the people to launch the general uprising and seize power. The conference adopted a resolution covering 11 major issues, and decided to establish the National Uprising Committee and the High Command of the Viet Nam Liberation Army.",
-        "Running in parallel with the National Party Conference, Ho Chi Minh convened the Tan Trao Congress of People’s Representatives, held in Tuyen Quang Province from August 16 to 17, 1945. More than 60 delegates gradually gathered in Tan Trao, representing northern, central and southern Viet Nam, overseas Vietnamese communities, political parties, mass organisations, ethnic minority groups and religious communities. The congress endorsed the line adopted by the Party, approved the Viet Minh’s ten major policies, adopted the red flag with a five-pointed yellow star as the national flag, selected Tien Quan Ca (The Marching Song) by Van Cao as the national anthem, and elected the National Liberation Committee — the Provisional Government — with Ho Chi Minh serving as its president.",
-        "That afternoon, Ho Chi Minh’s fever returned, preventing him from attending the departure ceremony of the Liberation Army. On August 17, the closing day of the Congress of People’s Representatives, he nevertheless struggled to attend. Standing before Tan Trao Communal House, he delivered, on behalf of the Viet Nam National Liberation Committee, the oath of office introducing the committee to the nation.",
-      ],
-    },
-    quote: M(
-      "“Chúng ta được đại biểu của quốc dân bầu ra để làm việc trong Ủy ban Dân tộc giải phóng, lãnh đạo cuộc cách mạng của nhân dân. Trước lá cờ thiêng liêng của Tổ quốc, chúng ta nguyện kiên quyết lãnh đạo nhân dân tiến lên, ra sức chiến đấu chống quân thù, giành lại độc lập cho Tổ quốc. Dù phải hy sinh đến giọt máu cuối cùng, quyết không lùi bước. Xin thề!”",
-      "“We have been elected by the representatives of the people to serve on the National Liberation Committee and lead our people’s revolution. Before the sacred flag of the Fatherland, we solemnly pledge to lead our people forward with unwavering determination, to fight the enemy with all our strength, and to regain our nation’s independence. Even if we must sacrifice the last drop of our blood, we shall never retreat. This we solemnly swear.”",
-    ),
-    quoteAttr: M(
-      "Lời tuyên thệ trước Đình Tân Trào, 17/8/1945",
-      "The oath before Tan Trao Communal House, August 17, 1945",
-    ),
-    stats: [
       {
         value: 60,
         suffix: "+",
@@ -498,6 +486,16 @@ export const chapters: Chapter[] = [
     ],
     pins: [
       {
+        x: "72%",
+        y: "30%",
+        label: M("Tân Trào", "Tan Trao"),
+        date: "16/7/1945",
+        title: M("Tân Trào, Tuyên Quang", "Tan Trao, Tuyen Quang"),
+        url: "https://maps.google.com/maps?q=21.8117,105.4467&z=13&output=embed",
+      },
+      {
+        // TODO: toạ độ cũ đo trên ảnh tantrao-clearing.png (đã bỏ), cần chỉnh
+        // lại cho khớp ảnh moment-1945.png.
         x: "46%",
         y: "70%",
         label: M("Đình Tân Trào", "Tan Trao Communal House"),
@@ -525,8 +523,6 @@ export const chapters: Chapter[] = [
     ),
     img: "vi/5.jpg",
     alt: M("Nhà 48 Hàng Ngang, Hà Nội", "The house at 48 Hang Ngang, Ha Noi"),
-    img2: "assets/moment-1945.png",
-    alt2: M("Ngày 2/9/1945 tại Ba Đình", "September 2, 1945 at Ba Dinh"),
     paras: {
       vi: [
         "Chiều 25/8/1945, Người vào nội thành Hà Nội và ở tại nhà số 48 Hàng Ngang, nhà của nhà tư sản yêu nước Trịnh Văn Bô. Sáng 26/8, Người triệu tập và chủ trì cuộc họp Thường vụ Trung ương Đảng tại Hà Nội, bàn những chủ trương đối nội, đối ngoại trong tình hình mới, thông qua thành phần Chính phủ lâm thời và quyết định tổ chức một cuộc mít tinh lớn ở Hà Nội để Chính phủ ra mắt nhân dân.",
