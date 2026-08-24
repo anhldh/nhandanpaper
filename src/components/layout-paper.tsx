@@ -16,7 +16,7 @@ type Lang = "vi" | "en";
 const IMAGES_VI = [
   {
     id: "img1",
-    src: "https://cdn.yoolife.com.vn/yootek/1756975999045-2746.jpg",
+    src: "https://anhldh.com/images/nhandanen/1-vi.jpg",
   },
   {
     id: "img2",
@@ -32,11 +32,11 @@ const IMAGES_VI = [
   },
   {
     id: "img5",
-    src: "https://cdn.yoolife.com.vn/yootek/1756975937919-7757.jpg",
+    src: "https://anhldh.com/images/nhandanen/5-vi.jpg",
   },
   {
     id: "img6",
-    src: "https://cdn.yoolife.com.vn/yootek/1756975948514-3604.jpg",
+    src: "https://anhldh.com/images/nhandanen/6-vi.jpg",
   },
 ];
 
@@ -49,9 +49,31 @@ const IMAGES_EN = [
   { id: "img5", src: "https://anhldh.com/images/nhandanen/6.jpg" },
   {
     id: "img6",
-    src: "https://cdn.yoolife.com.vn/yootek/1756975948514-3604.jpg",
+    src: "https://anhldh.com/images/nhandanen/6-vi.jpg",
   },
 ];
+
+const MARKER_VI = {
+  img1: [{ xPct: 0.554, yPct: 0.476 }],
+  img3: [{ xPct: 0.828, yPct: 0.696 }],
+  img4: [
+    // { xPct: 0.1175, yPct: 0.498 },
+    // { xPct: 0.8625, yPct: 0.82 },
+    { xPct: 0.583, yPct: 0.928 },
+  ],
+  img5: [{ xPct: 0.860938, yPct: 0.813 }],
+};
+
+const MARKER_EN = {
+  img1: [{ xPct: 0.554, yPct: 0.476 }],
+  img3: [{ xPct: 0.831, yPct: 0.679 }],
+  img4: [
+    // { xPct: 0.1175, yPct: 0.498 },
+    // { xPct: 0.8625, yPct: 0.82 },
+    { xPct: 0.583, yPct: 0.921 },
+  ],
+  img5: [{ xPct: 0.860938, yPct: 0.78 }],
+};
 
 export default function LayoutPaper() {
   const [selected, setSelected] = useState<any>(null);
@@ -65,6 +87,7 @@ export default function LayoutPaper() {
   const [scrolled, setScrolled] = useState(false);
 
   const images = lang === "vi" ? IMAGES_VI : IMAGES_EN;
+  const iconsByImg = lang === "vi" ? MARKER_VI : MARKER_EN;
 
   /** Thanh cuộn chỉ ẩn ở trang này, không đụng tới các route khác. */
   useEffect(() => {
@@ -176,16 +199,7 @@ export default function LayoutPaper() {
                 },
               ],
             }}
-            iconsByImg={{
-              img1: [{ xPct: 0.554, yPct: 0.476 }],
-              img3: [{ xPct: 0.828, yPct: 0.696 }],
-              img4: [
-                // { xPct: 0.1175, yPct: 0.498 },
-                // { xPct: 0.8625, yPct: 0.82 },
-                { xPct: 0.583, yPct: 0.928 },
-              ],
-              img5: [{ xPct: 0.860938, yPct: 0.807 }],
-            }}
+            iconsByImg={iconsByImg}
             setSelected={setSelected}
             markerHitSize={isMobile ? 50 : 100}
             iconSize={isMobile ? 70 : 100}
