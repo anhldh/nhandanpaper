@@ -36,7 +36,7 @@ const IMAGES_VI = [
   },
   {
     id: "img6",
-    src: "https://anhldh.com/images/nhandanen/6-vi.jpg",
+    src: "https://anhldh.com/images/nhandanen/6-vi-v2.jpg",
   },
 ];
 
@@ -49,7 +49,7 @@ const IMAGES_EN = [
   { id: "img5", src: "https://anhldh.com/images/nhandanen/6.jpg" },
   {
     id: "img6",
-    src: "https://anhldh.com/images/nhandanen/6-vi.jpg",
+    src: "https://anhldh.com/images/nhandanen/6-vi-v2.jpg",
   },
 ];
 
